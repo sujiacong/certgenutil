@@ -136,11 +136,11 @@
 //!
 //! ## Contributing
 //!
-//! Contributions are welcome! Please open an issue or submit a pull request on the [GitHub repository](https://github.com/your_username/your_repo).
+//! Contributions are welcome! Please open an issue or submit a pull request on the [GitHub repository](https://github.com/sujiacong/certgenutil).
 //!
 //! ## Contact
 //!
-//! For questions or support, please contact [your_email@example.com](mailto:your_email@example.com).
+//! For questions or support, please contact [linfengfeiye@qq.com](mailto:linfengfeiye@qq.com).
 
 use thiserror::Error;
 use rustls_pki_types::{CertificateDer, PrivateKeyDer};
