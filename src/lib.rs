@@ -18,8 +18,8 @@
 //! ### Generating a Self-Signed CA Certificate
 //!
 //! ```rust
-//! use CertGenUtil::generate_self_signed_cert;
-//!
+//! use certgenutil::generate_self_signed_cert;
+//! 
 //! let (cert, private_key) = generate_self_signed_cert(
 //!     "example.com",
 //!     true,
@@ -33,10 +33,10 @@
 //! #### Using a CA Certificate File
 //!
 //! ```rust
-//! use CertGenUtil::generate_server_cert_by_ca_file;
+//! use certgenutil::generate_server_cert_by_ca_file;
 //! use std::path::PathBuf;
 //!
-//! let ca_file_path = PathBuf::from("/path/to/ca/cert.pem");
+//! let ca_file_path = PathBuf::from("ca.pem");
 //! let (cert, private_key) = generate_server_cert_by_ca_file(
 //!     ca_file_path,
 //!     "example.com",
@@ -48,9 +48,23 @@
 //! #### Using a CA Certificate PEM String
 //!
 //! ```rust
-//! use CertGenUtil::generate_server_cert_by_ca_pem;
+//! use certgenutil::generate_server_cert_by_ca_pem;
 //!
-//! let ca_pem = String::from("-----BEGIN CERTIFICATE-----...");
+//! let ca_pem = String::from(r#"-----BEGIN CERTIFICATE-----
+//! MIIBejCCASCgAwIBAgIUNcB9KoFex2HVOvNXIZzfN/7QyMUwCgYIKoZIzj0EAwIw
+//! ETEPMA0GA1UEAwwGcm9vdGNhMB4XDTI0MDgxODA0NDEwOFoXDTI1MDgxODA0NDEw
+//! OFowETEPMA0GA1UEAwwGcm9vdGNhMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE
+//! 0kzg73SoZ82snyWboqjKbrlgvavvzduYSWmn2x6NBejWlPLLxdtMxiY0NVfSXq+I
+//! 9eBqzr88yV7QC79yH+GxyKNWMFQwEgYDVR0RBAswCYIHYWJjLmNvbTAOBgNVHQ8B
+//! Af8EBAMCAQYwHQYDVR0OBBYEFP/KV01ye89Wwfde0wic7i+StpidMA8GA1UdEwEB
+//! /wQFMAMBAf8wCgYIKoZIzj0EAwIDSAAwRQIgfQlSU05caJtz8XxJvA/AmHSQkroy
+//! YUloxc/s1mQKR9ICIQD9twx295ClByM7bjsHsGNnORok3szuCuJiQaX9o5DR1w==
+//! -----END CERTIFICATE-----
+//! -----BEGIN PRIVATE KEY-----
+//! MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgSnXLALeEZnbLdbRT
+//! T4IumE9TztYMJTF97pMQFpF0zByhRANCAATSTODvdKhnzayfJZuiqMpuuWC9q+/N
+//! 25hJaafbHo0F6NaU8svF20zGJjQ1V9Jer4j14GrOvzzJXtALv3If4bHI
+//! -----END PRIVATE KEY-----"#);
 //! let (cert, private_key) = generate_server_cert_by_ca_pem(
 //!     ca_pem,
 //!     "example.com",
@@ -64,11 +78,11 @@
 //! #### From PEM Files
 //!
 //! ```rust
-//! use CertGenUtil::{load_cert_from_pem_file, load_key_from_pem_file};
+//! use certgenutil::{load_cert_from_pem_file, load_key_from_pem_file};
 //! use std::path::PathBuf;
 //!
-//! let cert_path = PathBuf::from("/path/to/cert.pem");
-//! let key_path = PathBuf::from("/path/to/key.pem");
+//! let cert_path = PathBuf::from("ca.pem");
+//! let key_path = PathBuf::from("ca.pem");
 //!
 //! let cert = load_cert_from_pem_file(cert_path).unwrap();
 //! let key = load_key_from_pem_file(key_path).unwrap();
@@ -77,10 +91,23 @@
 //! #### From PEM Strings
 //!
 //! ```rust
-//! use CertGenUtil::{load_cert_from_pem_str, load_key_from_pem_str};
+//! use certgenutil::{load_cert_from_pem_str, load_key_from_pem_str};
 //!
-//! let cert_pem = "-----BEGIN CERTIFICATE-----...";
-//! let key_pem = "-----BEGIN PRIVATE KEY-----...";
+//! let cert_pem = r#"-----BEGIN CERTIFICATE-----
+//! MIIBejCCASCgAwIBAgIUBH8zfLAlg0h8FQUc8wZjJlrPWrgwCgYIKoZIzj0EAwIw
+//! ETEPMA0GA1UEAwwGcm9vdGNhMB4XDTI0MDgxODA0MzMxMFoXDTI1MDgxODA0MzMx
+//! MFowETEPMA0GA1UEAwwGcm9vdGNhMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE
+//! 8GuAphYzDWDsTbuXaQcZt28NAgVJJC2RRj+h76CtfpIH/VonRCEBsRtS6UOWXvi9
+//! QX7bO+evfMFvpyJq7IE9KaNWMFQwEgYDVR0RBAswCYIHYWJjLmNvbTAOBgNVHQ8B
+//! Af8EBAMCAQYwHQYDVR0OBBYEFPK0E8CY4Hv2FQurWHogzHeXWIYWMA8GA1UdEwEB
+//! /wQFMAMBAf8wCgYIKoZIzj0EAwIDSAAwRQIhAKvhoh2oz+WZ3Ry0du8saLwqAFBz
+//! Kdpn9dwKE0NF3Ju9AiAs2ZO7fDaMxEkeFIqZi1XktTNWOzSMrjuZDknC2tZugQ==
+//! -----END CERTIFICATE-----"#;
+//! let key_pem = r#"-----BEGIN PRIVATE KEY-----
+//! MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgPY2goeIEayj3JLGR
+//! /eRUTD7CAevRscPGxSWAbcWOpYChRANCAATwa4CmFjMNYOxNu5dpBxm3bw0CBUkk
+//! LZFGP6HvoK1+kgf9WidEIQGxG1LpQ5Ze+L1Bfts75698wW+nImrsgT0p
+//! -----END PRIVATE KEY-----"#;
 //!
 //! let cert = load_cert_from_pem_str(cert_pem).unwrap();
 //! let key = load_key_from_pem_str(key_pem).unwrap();
@@ -89,14 +116,11 @@
 //! ### Converting to PEM Format
 //!
 //! ```rust
-//! use CertGenUtil::{get_cert_pem, get_key_pem};
-//! use rustls_pki_types::{CertificateDer, PrivateKeyDer};
-//!
-//! let cert_der = CertificateDer::from(vec![/* DER encoded certificate */]);
-//! let key_der = PrivateKeyDer::Pkcs8(vec![/* DER encoded private key */]);
-//!
-//! let cert_pem = get_cert_pem(cert_der);
-//! let key_pem = get_key_pem(key_der).unwrap();
+//! use certgenutil::{get_cert_pem, get_key_pem,load_cert_from_pem_file,load_key_from_pem_file};
+//! let cert = load_cert_from_pem_file("ca.pem").unwrap();
+//! let key = load_key_from_pem_file("ca.pem").unwrap();
+//! let cert_pem = get_cert_pem(&cert);
+//! let key_pem = get_key_pem(&key).unwrap();
 //! ```
 //!
 //! ## Dependencies
@@ -412,18 +436,18 @@ pub fn generate_self_signed_cert(
 /// 
 /// ```
 /// use std::path::PathBuf;
-/// use your_certificate_library::{generate_server_cert_by_ca_file, CertGenError};
+/// use certgenutil::{generate_server_cert_by_ca_file, CertGenError};
 ///
 /// // Example usage:
-/// let ca_file_path = PathBuf::from("/path/to/ca/cert.pem");
+/// let ca_file_path = PathBuf::from("ca.pem");
 /// let (cert, private_key) = generate_server_cert_by_ca_file(
 ///     ca_file_path,
 ///     "example.com",
 ///     365,
 ///     vec!["www.example.com".to_string(), "mail.example.com".to_string()],
-/// )?;
-/// assert!(matches!(cert, Ok(_)));
-/// assert!(matches!(private_key, Ok(_)));
+/// ).unwrap();
+/// assert!(cert.len() > 0);
+/// assert!(private_key.secret_der().len() > 0);
 /// ```
 pub fn generate_server_cert_by_ca_file<P: AsRef<std::path::Path>>(cafile: P,
     common_name: &str,
@@ -475,13 +499,29 @@ pub fn generate_server_cert_by_ca_file<P: AsRef<std::path::Path>>(cafile: P,
 /// # Examples
 /// 
 /// ```
-/// let ca_pem = String::from("-----BEGIN CERTIFICATE-----...");
+/// use certgenutil::generate_server_cert_by_ca_pem;
+/// let ca_pem = String::from(r#"-----BEGIN CERTIFICATE-----
+/// MIIBejCCASCgAwIBAgIUNcB9KoFex2HVOvNXIZzfN/7QyMUwCgYIKoZIzj0EAwIw
+/// ETEPMA0GA1UEAwwGcm9vdGNhMB4XDTI0MDgxODA0NDEwOFoXDTI1MDgxODA0NDEw
+/// OFowETEPMA0GA1UEAwwGcm9vdGNhMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE
+/// 0kzg73SoZ82snyWboqjKbrlgvavvzduYSWmn2x6NBejWlPLLxdtMxiY0NVfSXq+I
+/// 9eBqzr88yV7QC79yH+GxyKNWMFQwEgYDVR0RBAswCYIHYWJjLmNvbTAOBgNVHQ8B
+/// Af8EBAMCAQYwHQYDVR0OBBYEFP/KV01ye89Wwfde0wic7i+StpidMA8GA1UdEwEB
+/// /wQFMAMBAf8wCgYIKoZIzj0EAwIDSAAwRQIgfQlSU05caJtz8XxJvA/AmHSQkroy
+/// YUloxc/s1mQKR9ICIQD9twx295ClByM7bjsHsGNnORok3szuCuJiQaX9o5DR1w==
+/// -----END CERTIFICATE-----
+/// -----BEGIN PRIVATE KEY-----
+/// MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgSnXLALeEZnbLdbRT
+/// T4IumE9TztYMJTF97pMQFpF0zByhRANCAATSTODvdKhnzayfJZuiqMpuuWC9q+/N
+/// 25hJaafbHo0F6NaU8svF20zGJjQ1V9Jer4j14GrOvzzJXtALv3If4bHI
+/// -----END PRIVATE KEY-----"#);
+/// 
 /// let (certs, private_key) = generate_server_cert_by_ca_pem(
 ///     ca_pem,
 ///     "example.com",
 ///     365,
 ///     vec!["www.example.com".to_string(), "mail.example.com".to_string()],
-/// )?;
+/// ).unwrap();
 /// ```
 pub fn generate_server_cert_by_ca_pem<T: AsRef<str>>(s: T,
     common_name: &str,
@@ -685,5 +725,17 @@ OEa6ZFEk4oIiYRARa+/BBkIBsETm+QuJkKSW1pYOKVmsJ9Sq7R7Hig==
         let (certs, _key) = result.unwrap();
         assert_eq!(certs.len(), 1);
     }
+
+//     #[test]
+//     fn test()
+//     {use certgenutil::
+//         use certgenutil::generate_self_signed_cert;
+//         let (cert, private_key) = generate_self_signed_cert(
+//         "example.com",
+//         true,
+//         365,
+//         vec!["www.example.com".to_string(), "mail.example.com".to_string()],
+//         ).unwrap();
+//    }
 }    
 
