@@ -1,6 +1,6 @@
 [package]
 name = "certgenutil"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["sujiacong <linfengfeiye@qq.com>"]
 edition = "2021"
 description = "generating self-signed certificates , creating server certificates signed by a Certificate Authority (CA)"
