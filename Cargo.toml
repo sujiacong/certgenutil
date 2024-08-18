@@ -1,0 +1,16 @@
+[package]
+name = "certgenutil"
+version = "0.1.0"
+authors = ["sujiacong <linfengfeiye@qq.com>"]
+edition = "2021"
+description = "generating self-signed certificates , creating server certificates signed by a Certificate Authority (CA)"
+license = "MIT"
+repository = "https://github.com/sujiacong/certgenutil"
+
+[dependencies]
+rcgen = { version = "0.13.1", features = ["pem", "x509-parser", "aws_lc_rs"] }
+rustls-pki-types = "1.8.0"
+rustls-pemfile = "2"
+time = "0.3.36"
+thiserror = "1.0.63"
+pem = "3.0.2"
